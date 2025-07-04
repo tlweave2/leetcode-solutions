@@ -1,38 +1,18 @@
 class Solution {
-   
-        public int rob(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        
-        // Create memoization array to avoid recalculating same subproblems
-        Integer[] memo = new Integer[nums.length];
-        
-        return robHelper(nums, 0, memo);
-    }
+   public int rob(int[] nums) {
+    if (nums == null || nums.length == 0) return 0;
+    if (nums.length == 1) return nums[0];
+    if (nums.length == 2) return Math.max(nums[0], nums[1]);
     
-    // Recursive helper method with memoization
-    private int robHelper(int[] nums, int index, Integer[] memo) {
-        // Base case: if we've gone past the last house
-        if (index >= nums.length) {
-            return 0;
-        }
-        
-        // If we've already calculated this subproblem, return cached result
-        if (memo[index] != null) {
-            return memo[index];
-        }
-        
-        // Two choices at each house:
-        // Option 1: Rob this house + best from house (index + 2) onwards
-        int robCurrent = nums[index] + robHelper(nums, index + 2, memo);
-        
-        // Option 2: Skip this house + best from house (index + 1) onwards  
-        int skipCurrent = robHelper(nums, index + 1, memo);
-        
-        // Take the maximum of the two options
-        memo[index] = Math.max(robCurrent, skipCurrent);
-        
-        return memo[index];
+    // Now safe to use the main algorithm
+    int prev2 = nums[0];
+    int prev1 = Math.max(nums[0], nums[1]);
+    
+    for (int i = 2; i < nums.length; i++) {
+        int current = Math.max(nums[i] + prev2, prev1);
+        prev2 = prev1;
+        prev1 = current;
     }
-    }
+    return prev1;
+}
+}
