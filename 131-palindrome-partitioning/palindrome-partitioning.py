@@ -5,14 +5,11 @@ class Solution:
         current_partition = []
         
         def is_palindrome(substring):
-            """Check if string is palindrome using Python slice magic"""
+           
             return substring == substring[::-1]
         
         def backtrack(start_index):
-            """
-            Backtracking function to build all valid partitions
-            start_index: where to start partitioning from
-            """
+         
             # Base case: reached end of string
             if start_index == len(s):
                 # Found a complete valid partition!
