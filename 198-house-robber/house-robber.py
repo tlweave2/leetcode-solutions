@@ -5,12 +5,12 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         
-        prev2 = nums[0]
-        prev1 = max(nums[0], nums[1])
+        two_houses_back = nums[0]
+        one_house_back = max(nums[0], nums[1])
         
         for i in range(2, len(nums)):
-            current = max(prev1, prev2 + nums[i])
-            prev2 = prev1
-            prev1 = current
+            current = max(one_house_back, two_houses_back + nums[i])
+            two_houses_back = one_house_back
+            one_house_back = current
         
-        return prev1
+        return one_house_back
