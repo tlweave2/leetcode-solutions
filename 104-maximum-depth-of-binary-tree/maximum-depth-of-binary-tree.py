@@ -10,8 +10,16 @@ class Solution:
         if not root:
             return 0
         
-        left = self.maxDepth(root.left)
-        right = self.maxDepth(root.right)
-
-        return 1 + max(left, right)
+        stack = [(root, 1)]
+        max_depth = 0
         
+        while stack:
+            node, depth = stack.pop()
+            max_depth = max(max_depth, depth)
+            
+            if node.right:
+                stack.append((node.right, depth + 1))
+            if node.left:
+                stack.append((node.left, depth + 1))
+        
+        return max_depth
