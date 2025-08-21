@@ -4,7 +4,7 @@ class Solution:
         
         
         
-        Space: O(1) if sorting in-place
+       
         """
         # Fix 1: sort() returns None, it sorts in-place
         players.sort()
