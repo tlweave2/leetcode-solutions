@@ -1,7 +1,7 @@
 class Solution:
     def matchPlayersAndTrainers(self, players: List[int], trainers: List[int]) -> int:
         """
-        Greedy approach: Sort both arrays and use two pointers
+        
         
         Time: O(n log n + m log m) for sorting
         Space: O(1) if sorting in-place
