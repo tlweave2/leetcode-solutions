@@ -16,8 +16,11 @@ class Solution {
             }
         }
         
-        // Step 5: Convert List back to array
-        return merged.toArray(new int[merged.size()][]);
+    int[][] result = new int[merged.size()][];
+for (int i = 0; i < merged.size(); i++) {
+    result[i] = merged.get(i);
+}
+return result;
     }
     
 }
