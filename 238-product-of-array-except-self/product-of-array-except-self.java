@@ -1,21 +1,16 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int n = nums.length;
-        int[] result = new int[n];
-        
-        // Step 1: Fill result with prefix products
-        result[0] = 1;
-        for (int i = 1; i < n; i++) {
-            result[i] = result[i-1] * nums[i-1];
-        }
-        
-        // Step 2: Multiply by suffix products (using a variable)
-        int suffixProduct = 1;
-        for (int i = n-1; i >= 0; i--) {
-            result[i] *= suffixProduct;
-            suffixProduct *= nums[i];
-        }
-        
-        return result;
-    }
+ int[] result = new int[nums.length];
+
+// Fill result with products of all elements to the LEFT of each position
+result[0] = 1;  // Nothing to the left of index 0
+for (int i = 1; i < nums.length; i++) {
+    result[i] = result[i-1] * nums[i-1];  // Previous result * element to the left
+}
+    int rightProduct = 1;  // Track running product from the right
+for (int i = nums.length - 1; i >= 0; i--) {
+    result[i] = result[i] * rightProduct;  // Multiply existing left product by right product
+    rightProduct = rightProduct * nums[i]; // Update right product for next iteration
+}return result;
+}
 }
