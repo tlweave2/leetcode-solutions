@@ -1,47 +1,45 @@
 class Solution {
     public List<String> restoreIpAddresses(String s) {
-            List<String> result = new ArrayList<>();
-        backtrack(s, 0, 0, new StringBuilder(), result);
+        List<String> result = new ArrayList<>();
+        int n = s.length();
+
+        // Length must be between 4 and 12 for any valid IP
+        if (n < 4 || n > 12) {
+            return result;
+        }
+
+        // i, j, k are the end indices (exclusive) of the first 3 segments
+        for (int i = 1; i <= 3 && i < n - 2; i++) {
+            String p1 = s.substring(0, i);
+            if (!isValidPart(p1)) continue;
+
+            for (int j = i + 1; j <= i + 3 && j < n - 1; j++) {
+                String p2 = s.substring(i, j);
+                if (!isValidPart(p2)) continue;
+
+                for (int k = j + 1; k <= j + 3 && k < n; k++) {
+                    String p3 = s.substring(j, k);
+                    String p4 = s.substring(k);
+
+                    if (!isValidPart(p3) || !isValidPart(p4)) continue;
+
+                    result.add(p1 + "." + p2 + "." + p3 + "." + p4);
+                }
+            }
+        }
+
         return result;
     }
 
-    private void backtrack(String s, int index, int partCount, StringBuilder current, List<String> result) {
-        // If we've placed 4 parts and used all characters, it's a valid IP
-        if (partCount == 4 && index == s.length()) {
-            result.add(current.toString());
-            return;
-        }
+    // Check if a segment is a valid IP part
+    private boolean isValidPart(String part) {
+        // Empty or too long
+        if (part.length() == 0 || part.length() > 3) return false;
 
-        // If we've placed 4 parts but still have characters left, or not enough chars to fill remaining parts
-        if (partCount == 4 || index == s.length()) {
-            return;
-        }
+        // Leading zero is only allowed for "0"
+        if (part.length() > 1 && part.charAt(0) == '0') return false;
 
-        // Try segments of length 1 to 3
-        for (int len = 1; len <= 3; len++) {
-            // If we don't have enough characters left for this segment, break
-            if (index + len > s.length()) break;
-
-            String segment = s.substring(index, index + len);
-
-            // Leading zero check: if length > 1 and starts with '0', invalid
-            if (segment.length() > 1 && segment.charAt(0) == '0') break;
-
-            int value = Integer.parseInt(segment);
-            if (value > 255) break; // since longer segments will only be larger
-
-            int beforeAppendLength = current.length();
-
-            // Append segment (and dot if it's not the first segment)
-            if (partCount > 0) {
-                current.append('.');
-            }
-            current.append(segment);
-
-            backtrack(s, index + len, partCount + 1, current, result);
-
-            // Backtrack (remove the added segment and optional dot)
-            current.setLength(beforeAppendLength);
-        }
+        int value = Integer.parseInt(part);
+        return value >= 0 && value <= 255;
     }
 }
