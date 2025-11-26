@@ -1,4 +1,3 @@
-
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer , Integer> map = new HashMap<>();
@@ -8,6 +7,7 @@ class Solution {
 
            }else
            map.put(nums[i], i); 
-        }return nums;
+        }return nums;    
     }
+    //try
 }
